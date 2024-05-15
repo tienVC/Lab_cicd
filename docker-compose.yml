@@ -4,16 +4,6 @@ services:
     image: "postgres:latest"
     environment:
       - POSTGRES_PASSWORD=postgres_password
-  nginx:
-    depends_on:
-      - api
-      - client
-    restart: always
-    build:
-      dockerfile: Dockerfile.dev
-      context: ./client
-    ports:
-      - "3050:80"
   api:
     build:
       dockerfile: Dockerfile.dev
