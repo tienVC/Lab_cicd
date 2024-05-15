@@ -6,7 +6,7 @@ pipeline {
     }
     environment {
         SCANNER_HOME = tool 'sonar-scanner'
-        APP_NAME = "Lab_cicd"
+        APP_NAME = "lab_cicd"
         RELEASE = "1.0.0"
         DOCKER_USER = "tientrang0311"
         DOCKER_PASS = "dockerhub"
@@ -46,19 +46,19 @@ pipeline {
                 sh "npm install"
             }
         }
-	    stage("Build & Push Docker Image") {
-             steps {
-              script {
-                 sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
-
-                // Push the image(s)
-                dockerImage("${IMAGE_NAME}:${IMAGE_TAG}").push()  // Push specific tag
-
-                // Optionally push `latest` tag in addition to build tag
-                dockerImage("${IMAGE_NAME}:${IMAGE_TAG}").push('latest')
-                  }
-             }
-         }
+	stage("Build & Push Docker Image") {
+	             steps {
+	                 script {
+	                     docker.withRegistry('',DOCKER_PASS) {
+	                         docker_image = docker.build "${IMAGE_NAME}"
+	                     }
+	                     docker.withRegistry('',DOCKER_PASS) {
+	                         docker_image.push("${IMAGE_TAG}")
+	                         docker_image.push('latest')
+	                     }
+	                 }
+	             }
+	         }
 
 	 stage ('Cleanup Artifacts') {
              steps {
