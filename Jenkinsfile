@@ -26,12 +26,24 @@ pipeline {
             }
         }
          stage("Sonarqube Analysis") {
-            steps {
-                withSonarQubeEnv('SonarQube-Server') {
-                    sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Lab_cicd \
-                    -Dsonar.projectKey=Lab_cicd '''
-                }
-            }
+            // steps {
+            //     withSonarQubeEnv('SonarQube-Server') {
+            //         sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Lab_cicd \
+            //         -Dsonar.projectKey=Lab_cicd '''
+            //     }
+            // }
+		 steps{
+			script{
+				def scannerHome = tool 'sonar-scanner';
+			}
+			withSonarQubeEnv('My SonarQube Server') {
+					sh "${scannerHome}/bin/sonar-scanner sonar-scanner \
+					  -Dsonar.projectKey=Lab_cicd \
+					  -Dsonar.sources=. \
+					  -Dsonar.host.url=http://3.132.221.232:9000 \
+					  -Dsonar.login=sqp_e70bf5d7f6378c6d0435f3ddfbebf51fa66d4411"
+			}
+		}
         }
         stage("Quality Gate") {
             steps {
