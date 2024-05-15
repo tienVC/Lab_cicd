@@ -25,7 +25,7 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/tienVC/Lab_cicd.git'
             }
         }
-        stage("Sonarqube Analysis") {
+         stage("Sonarqube Analysis") {
             steps {
                 withSonarQubeEnv('SonarQube-Server') {
                     sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Lab_cicd \
