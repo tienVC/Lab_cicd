@@ -28,7 +28,7 @@ pipeline {
          stage("Sonarqube Analysis") {
             steps {
                 withSonarQubeEnv('SonarQube-Server') {
-                    sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Lab_cicd \
+                    sh '''/opt/sonarscanner/bin/sonar-scanner -Dsonar.projectName=Lab_cicd \
                     -Dsonar.projectKey=Lab_cicd '''
                 }
             }
