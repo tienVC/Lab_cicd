@@ -50,11 +50,13 @@ pipeline {
              steps {
                  script {
                      docker.withRegistry('',DOCKER_PASS) {
-                         docker_image = docker.build "${IMAGE_NAME}"
+                         // docker_image = docker.build "${IMAGE_NAME}"
+			 sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
                      }
                      docker.withRegistry('',DOCKER_PASS) {
-                         // docker_image.push("${IMAGE_TAG}")
-                         docker_image.push('latest')
+                         //  docker_image.push("${IMAGE_TAG}")
+                         // docker_image.push('latest')
+			dockerImage("${IMAGE_NAME}:${IMAGE_TAG}").push('latest')
                      }
                  }
              }
