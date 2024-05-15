@@ -50,11 +50,13 @@ pipeline {
              steps {
                  script {
                      docker.withRegistry('',DOCKER_PASS) {
-                         docker_image = docker.build "${IMAGE_NAME}"
+                         // docker_image = docker.build "${IMAGE_NAME}"
+			sh 'sudo docker build -t ${DOCKER_USER}/${APP_NAME}:$BUILD_NUMBER .
                      }
                      docker.withRegistry('',DOCKER_PASS) {
-                         docker_image.push("${IMAGE_TAG}")
-                         docker_image.push('latest')
+                         // docker_image.push("${IMAGE_TAG}")
+                         // docker_image.push('latest')
+			sh 'sudo docker push ${DOCKER_USER}/${APP_NAME}:$BUILD_NUMBER'      
                      }
                  }
              }
