@@ -29,7 +29,7 @@ pipeline {
             steps {
                 withSonarQubeEnv('SonarQube-Server') {
                     sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Lab_cicd \
-                    -Dsonar.projectKey=Lab_cicd'''
+                    -Dsonar.projectKey=Lab_cicd ''
                 }
             }
         }
