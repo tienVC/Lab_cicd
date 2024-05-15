@@ -6,7 +6,7 @@ pipeline {
     }
     environment {
         SCANNER_HOME = tool 'sonar-scanner'
-        APP_NAME = "Lab_cicd"
+        APP_NAME = "lab_cicd"
         RELEASE = "1.0.0"
         DOCKER_USER = "tientrang0311"
         DOCKER_PASS = 'saker2001'
@@ -74,12 +74,15 @@ pipeline {
             }
          }
      }
-     post {
-    failure {
-        mail to: 'vucongtien0311@gmail.com',
-             subject: "Failed Pipeline: ${env.BUILD_NUMBER}",
-             body: "Something is wrong with ${env.BUILD_URL}"
-    }
-}
+    //  post {
+    //     always {
+    //        emailext attachLog: true,
+    //            subject: "'${currentBuild.result}'",
+    //            body: "Project: ${env.JOB_NAME}<br/>" +
+    //                "Build Number: ${env.BUILD_NUMBER}<br/>" +
+    //                "URL: ${env.BUILD_URL}<br/>",
+    //            to: 'vucongtien0311@gmail.com',                              
+    //     }
+    //  }
     
 }
