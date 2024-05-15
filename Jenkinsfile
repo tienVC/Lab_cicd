@@ -84,6 +84,5 @@ pipeline {
                    "URL: ${env.BUILD_URL}<br/>",
                to: 'vucongtien0311@gmail.com',                              
         }
-     }
-    
+     }  
 }
