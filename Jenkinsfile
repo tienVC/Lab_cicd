@@ -46,19 +46,44 @@ pipeline {
                 sh "npm install"
             }
         }
-	stage("Build & Push Docker Image") {
-	             steps {
-	                 script {
-	                     docker.withRegistry('',DOCKER_PASS) {
-	                         docker_image = docker.build "${IMAGE_NAME}"
-	                     }
-	                     docker.withRegistry('',DOCKER_PASS) {
-	                         docker_image.push("${IMAGE_TAG}")
-	                         docker_image.push('latest')
-	                     }
-	                 }
-	             }
-	         }
+	// stage("Build & Push Docker Image") {
+	//              steps {
+	//                  script {
+	//                      docker.withRegistry('',DOCKER_PASS) {
+	//                          docker_image = docker.build "${IMAGE_NAME}"
+	//                      }
+	//                      docker.withRegistry('',DOCKER_PASS) {
+	//                          docker_image.push("${IMAGE_TAG}")
+	//                          docker_image.push('latest')
+	//                      }
+	//                  }
+	//              }
+	//          }
+
+	    stage("Build Docker Image") {
+            steps {
+                script {
+                    dockerImage = docker.build("${IMAGE_NAME}:${IMAGE_TAG}")
+                }
+            }
+        }
+        stage("Push Docker Image") {
+            steps {
+                script {
+                    docker.withRegistry('', DOCKER_PASS) {
+                        dockerImage.push("${IMAGE_TAG}")
+                        dockerImage.push('latest')
+                    }
+                }
+            }
+        }
+        stage("Deploy with Docker Compose") {
+            steps {
+                script {
+                    sh "docker-compose -f ${COMPOSE_FILE} up -d"
+                }
+            }
+        }
 
 	 stage ('Cleanup Artifacts') {
              steps {
