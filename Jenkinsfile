@@ -9,7 +9,7 @@ pipeline {
         APP_NAME = "Lab_cicd"
         RELEASE = "1.0.0"
         DOCKER_USER = "tientrang0311"
-        DOCKER_PASS = 'saker2001'
+        DOCKER_PASS = "dockerhub"
         IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
         IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
 	JENKINS_API_TOKEN = credentials("JENKINS_API_TOKEN")
