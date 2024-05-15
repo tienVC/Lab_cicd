@@ -29,7 +29,7 @@ pipeline {
             steps {
                 withSonarQubeEnv('SonarQube-Server') {
                     sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Lab_cicd \
-                    -Dsonar.projectKey=Lab_cicd ''
+                    -Dsonar.projectKey=Lab_cicd '''
                 }
             }
         }
@@ -74,15 +74,15 @@ pipeline {
             }
          }
      }
-     post {
-        always {
-           emailext attachLog: true,
-               subject: "'${currentBuild.result}'",
-               body: "Project: ${env.JOB_NAME}<br/>" +
-                   "Build Number: ${env.BUILD_NUMBER}<br/>" +
-                   "URL: ${env.BUILD_URL}<br/>",
-               to: 'vucongtien0311@gmail.com',                              
-        }
-     }
+     // post {
+     //    always {
+     //       emailext attachLog: true,
+     //           subject: "'${currentBuild.result}'",
+     //           body: "Project: ${env.JOB_NAME}<br/>" +
+     //               "Build Number: ${env.BUILD_NUMBER}<br/>" +
+     //               "URL: ${env.BUILD_URL}<br/>",
+     //           to: 'vucongtien0311@gmail.com',                              
+     //    }
+     // }
     
 }
