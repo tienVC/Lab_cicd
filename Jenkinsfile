@@ -6,7 +6,7 @@ pipeline {
     }
     environment {
         SCANNER_HOME = tool 'sonar-scanner'
-        APP_NAME = "lab_cicd"
+        APP_NAME = "Lab_cicd"
         RELEASE = "1.0.0"
         DOCKER_USER = "tientrang0311"
         DOCKER_PASS = 'saker2001'
