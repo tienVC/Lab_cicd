@@ -71,18 +71,19 @@ pipeline {
 	 stage ('Cleanup Artifacts') {
              steps {
                  script {
-                      sh "docker rmi ${IMAGE_NAME}:${IMAGE_TAG}"
-                      sh "docker rmi ${IMAGE_NAME}:latest"
+                      // sh "docker rmi ${IMAGE_NAME}:${IMAGE_TAG}"
+                      // sh "docker rmi ${IMAGE_NAME}:latest"
+			  sh 'rm -rf target/*'
                  }
              }
          }
-	 stage("Trigger CD Pipeline") {
-            steps {
-                script {
-                    sh "curl -v -k --user clouduser:${JENKINS_API_TOKEN} -X POST -H 'cache-control: no-cache' -H 'content-type: application/x-www-form-urlencoded' --data 'IMAGE_TAG=${IMAGE_TAG}' 'http://3.132.221.232:8080//job/Lab_cicd/buildWithParameters?token=gitops-token'"
-                }
-            }
-         }
+	 // stage("Trigger CD Pipeline") {
+  //           steps {
+  //               script {
+  //                   sh "curl -v -k --user clouduser:${JENKINS_API_TOKEN} -X POST -H 'cache-control: no-cache' -H 'content-type: application/x-www-form-urlencoded' --data 'IMAGE_TAG=${IMAGE_TAG}' 'http://3.132.221.232:8080//job/Lab_cicd/buildWithParameters?token=gitops-token'"
+  //               }
+  //           }
+  //        }
     }
      // post {
      //    always {
