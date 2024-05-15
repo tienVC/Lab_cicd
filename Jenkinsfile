@@ -60,27 +60,10 @@ pipeline {
 	//              }
 	//          }
 
-	    stage("Build Docker Image") {
-            steps {
-                script {
-                    dockerImage = docker.build("${IMAGE_NAME}:${IMAGE_TAG}")
-                }
-            }
-        }
-        stage("Push Docker Image") {
-            steps {
-                script {
-                    docker.withRegistry('', DOCKER_PASS) {
-                        dockerImage.push("${IMAGE_TAG}")
-                        dockerImage.push('latest')
-                    }
-                }
-            }
-        }
         stage("Deploy with Docker Compose") {
             steps {
                 script {
-                    sh "docker-compose -f ${COMPOSE_FILE} up -d"
+                    sh "docker-compose -f docker-compose.yml up -d"
                 }
             }
         }
