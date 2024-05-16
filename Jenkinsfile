@@ -61,15 +61,15 @@ pipeline {
 	        //         sh 'docker-compose push'
 	        //     }
 	        // }
-	 stage ('Cleanup Artifacts') {
-             steps {
-                 script {
-                      // sh "docker rmi ${IMAGE_NAME}:${IMAGE_TAG}"
-                      // sh "docker rmi ${IMAGE_NAME}:latest"
-			  sh 'rm -rf target/*'
-                 }
-             }
-         }
+	 // stage ('Cleanup Artifacts') {
+  //            steps {
+  //                script {
+  //                     // sh "docker rmi ${IMAGE_NAME}:${IMAGE_TAG}"
+  //                     // sh "docker rmi ${IMAGE_NAME}:latest"
+		// 	  sh 'rm -rf target/*'
+  //                }
+  //            }
+  //        }
 	 // stage("Trigger CD Pipeline") {
   //           steps {
   //               script {
