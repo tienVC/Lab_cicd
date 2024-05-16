@@ -69,7 +69,7 @@ pipeline {
         }
 	stage('Push Image to Docker Hub') {         
     	    steps{                            
-		 sh 'sudo docker push ${DOCKER_USER}/${APP_NAME}:$BUILD_NUMBER'           
+		 sh 'docker push ${DOCKER_USER}/${APP_NAME}:$BUILD_NUMBER'           
 		echo 'Push Image Completed'       
 	    }            
 	}
