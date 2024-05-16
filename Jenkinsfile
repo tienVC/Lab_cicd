@@ -84,12 +84,12 @@ pipeline {
 	post {
 	        success {
 	            script {
-	                bat "curl -X POST -H \"Content-Type: application/json\" -d \"{\\\"chat_id\\\":93372553, \\\"text\\\": \\\"Pipeline succeeded!\\\", \\\"disable_notification\\\": false}\" https://api.telegram.org/bot${telegram_bot}/sendMessage"
+	                bat "curl -X POST -H \"Content-Type: application/json\" -d \"{\\\"chat_id\\\":7067694507, \\\"text\\\": \\\"Pipeline succeeded!\\\", \\\"disable_notification\\\": false}\" https://api.telegram.org/bot${telegram_bot}/sendMessage"
 	            }
 	        }
 	        failure {
 	            script {
-	                bat "curl -X POST -H \"Content-Type: application/json\" -d \"{\\\"chat_id\\\":93372553, \\\"text\\\": \\\"Pipeline failed!\\\", \\\"disable_notification\\\": false}\" https://api.telegram.org/bot${telegram_bot}/sendMessage"
+	                bat "curl -X POST -H \"Content-Type: application/json\" -d \"{\\\"chat_id\\\":7067694507, \\\"text\\\": \\\"Pipeline failed!\\\", \\\"disable_notification\\\": false}\" https://api.telegram.org/bot${telegram_bot}/sendMessage"
 	            }
 	        }
     	}
