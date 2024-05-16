@@ -46,7 +46,6 @@ pipeline {
                 sh "npm install"
             }
         }
-	stages {
 	        stage('Build Images') {
 	            steps {
 	                sh 'docker-compose build'
@@ -65,8 +64,6 @@ pipeline {
 	                sh 'docker-compose push'
 	            }
 	        }
-	    }
-
 	 stage ('Cleanup Artifacts') {
              steps {
                  script {
