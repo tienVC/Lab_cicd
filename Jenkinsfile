@@ -75,14 +75,9 @@ pipeline {
   //           }
   //        }
     }
-     post {
-        always {
-           emailext(
-		  body: 'Your build details here...',
-		  subject: "'${currentBuild.result}'",
-		  to: 'vucongtien0311@gmail.com',
-		  successCondition: 'SUCCESS'
-		)     
-        }
-     }
+     telegramNotify(
+	  token: credentials('TELEGRAM_BOT_TOKEN'), // Reference credentials containing Bot Token
+	  chatId: '93372553', // Replace with your actual Chat ID
+	  message: 'Your build '${env.JOB_NAME}' (#${env.BUILD_NUMBER}) is ${currentBuild.result}'
+	)
 }  
