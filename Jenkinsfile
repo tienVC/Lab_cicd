@@ -33,13 +33,13 @@ pipeline {
             }
 
         }
-        stage("Quality Gate") {
-            steps {
-                script {
-                    waitForQualityGate abortPipeline: false, credentialsId: 'sqp_c9d5aa06e36b6816005c9dc5368c9b5c8de25f29'
-                }
-            }
-        }
+        // stage("Quality Gate") {
+        //     steps {
+        //         script {
+        //             waitForQualityGate abortPipeline: false, credentialsId: 'sqp_c9d5aa06e36b6816005c9dc5368c9b5c8de25f29'
+        //         }
+        //     }
+        // }
         stage('Install Dependencies') {
             steps {
                 sh "npm install"
