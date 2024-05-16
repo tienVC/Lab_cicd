@@ -77,12 +77,12 @@ pipeline {
     }
      post {
         always {
-           emailext attachLog: true,
-               subject: "'${currentBuild.result}'",
-               body: "Project: ${env.JOB_NAME}<br/>" +
-                   "Build Number: ${env.BUILD_NUMBER}<br/>" +
-                   "URL: ${env.BUILD_URL}<br/>",
-               to: 'vucongtien0311@gmail.com'            
+           emailext(
+		  body: 'Your build details here...',
+		  subject: '$JOB_NAME - Build # $BUILD_NUMBER - $currentBuild.result',
+		  to: 'vucongtien0311@gmail.com',
+		  successCondition: 'SUCCESS', // Only send on successful builds (optional)
+		)     
         }
      }
 }  
