@@ -59,15 +59,15 @@ pipeline {
 	        //         sh 'docker-compose push'
 	        //     }
 	        // }
-	 // stage ('Cleanup Artifacts') {
-  //            steps {
-  //                script {
-  //                     // sh "docker rmi ${IMAGE_NAME}:${IMAGE_TAG}"
-  //                     // sh "docker rmi ${IMAGE_NAME}:latest"
-		// 	  sh 'rm -rf target/*'
-  //                }
-  //            }
-  //        }
+	 stage ('Cleanup Artifacts') {
+             steps {
+                 script {
+                      // sh "docker rmi ${IMAGE_NAME}:${IMAGE_TAG}"
+                      // sh "docker rmi ${IMAGE_NAME}:latest"
+			  sh 'rm -rf target/*'
+                 }
+             }
+         }
 	 // stage("Trigger CD Pipeline") {
   //           steps {
   //               script {
@@ -76,10 +76,19 @@ pipeline {
   //           }
   //        }
     }
-     telegramNotify(
-	  token: credentials('TELEGRAM_BOT_TOKEN'), // Reference credentials containing Bot Token
-	  chatId: '1936482774', // Replace with your actual Chat ID
-	  message: 'Your build (#${env.BUILD_NUMBER}) is ${currentBuild.result}'
-	)
+	post {
+	        success {
+	            script {
+	                // bat "curl -X POST -H \"Content-Type: application/json\" -d \"{\\\"chat_id\\\":${CHAT_ID}, \\\"text\\\": \\\"Pipeline succeeded!\\\", \\\"disable_notification\\\": false}\" https://api.telegram.org/bot${TOKEN}/sendMessage"
+			  sh "curl -s -X POST https://api.telegram.org/bot${telegram_bot}/sendMessage -d chat_id=1936482774 -d text="sucess""
+	            }
+	        }
+	        failure {
+	            script {
+	              	sh "curl -s -X POST https://api.telegram.org/bot${telegram_bot}/sendMessage -d chat_id=1936482774 -d text="fail""
+			    // bat "curl -X POST -H \"Content-Type: application/json\" -d \"{\\\"chat_id\\\":${CHAT_ID}, \\\"text\\\": \\\"Pipeline failed!\\\", \\\"disable_notification\\\": false}\" https://api.telegram.org/bot${TOKEN}/sendMessage"
+	            }
+	        }
+	    }
 
 }  
