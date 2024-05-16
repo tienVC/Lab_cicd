@@ -34,28 +34,33 @@ pipeline {
             }
 
         }
-        // stage("Quality Gate") {
-        //     steps {
-        //         script {
-        //             waitForQualityGate abortPipeline: false, credentialsId: 'sqp_c9d5aa06e36b6816005c9dc5368c9b5c8de25f29'
-        //         }
-        //     }
-        // }
         stage('Install Dependencies') {
             steps {
                 sh "npm install"
             }
         }
-	        stage('Build Images') {
-	            steps {
-	                sh 'docker-compose build'
-	            }
-	        }
-	        stage('Push Images') {
-	            steps {
-	                sh 'docker-compose push'
-	            }
-	        }
+	    stage("Build & Push Docker Image") {
+             steps {
+                 script {
+                     docker.withRegistry('',DOCKER_PASS) {
+                         sh 'docker-compose build'
+                     }
+                     docker.withRegistry('',DOCKER_PASS) {
+                        sh 'docker-compose push'
+                     }
+                 }
+             }
+         }
+	        // stage('Build Images') {
+	        //     steps {
+	        //         sh 'docker-compose build'
+	        //     }
+	        // }
+	        // stage('Push Images') {
+	        //     steps {
+	        //         sh 'docker-compose push'
+	        //     }
+	        // }
 	 stage ('Cleanup Artifacts') {
              steps {
                  script {
