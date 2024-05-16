@@ -80,14 +80,28 @@ pipeline {
 	        success {
 	            script {
 	                // bat "curl -X POST -H \"Content-Type: application/json\" -d \"{\\\"chat_id\\\":${CHAT_ID}, \\\"text\\\": \\\"Pipeline succeeded!\\\", \\\"disable_notification\\\": false}\" https://api.telegram.org/bot${TOKEN}/sendMessage"
-			  bat "curl -s -X POST https://api.telegram.org/bot${telegram_bot}/sendMessage -d chat_id=1936482774 -d text="sucess""
+			  // sh "curl -s -X POST https://api.telegram.org/bot${telegram_bot}/sendMessage -d chat_id=1936482774 -d text="sucess""
+			     sh """
+			        curl -X POST \
+			                -d chat_id=1936482774 \
+			                -d parse_mode=HTML \
+			                -d text='<b>success</b>' \
+			                https://api.telegram.org/bot${telegram_bot}/sendMessage
+			        """
 	            }
 	        }
 	        failure {
 	            script {
-	              	bat "curl -s -X POST https://api.telegram.org/bot${telegram_bot}/sendMessage -d chat_id=1936482774 -d text="fail""
+	              	// sh """curl -s -X POST https://api.telegram.org/bot${telegram_bot}/sendMessage -d chat_id=1936482774 -d text="fail""""
 			    // bat "curl -X POST -H \"Content-Type: application/json\" -d \"{\\\"chat_id\\\":${CHAT_ID}, \\\"text\\\": \\\"Pipeline failed!\\\", \\\"disable_notification\\\": false}\" https://api.telegram.org/bot${TOKEN}/sendMessage"
-	            }
+		             sh """
+				        curl -X POST \
+				                -d chat_id=${chatid} \
+				                -d parse_mode=HTML \
+				                -d text='<b>false</b>' \
+				                https://api.telegram.org/bot${telegram_bot}/sendMessage
+				        """
+		    }
 	        }
 	    }
 
