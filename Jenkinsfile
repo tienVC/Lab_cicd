@@ -14,6 +14,7 @@ pipeline {
         IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
 	JENKINS_API_TOKEN = credentials("JENKINS_API_TOKEN")
 	DOCKERHUB_API_TOKEN = credentials("docker_access_token")
+	telegram_bot=credentials('TELEGRAM_BOT_TOKEN')
     }
     stages {
         stage('clean workspace') {
@@ -75,9 +76,21 @@ pipeline {
   //           }
   //        }
     }
-     telegramNotify(
-	  token: credentials('TELEGRAM_BOT_TOKEN'), // Reference credentials containing Bot Token
-	  chatId: '93372553', // Replace with your actual Chat ID
-	  message: 'Your build (#${env.BUILD_NUMBER}) is ${currentBuild.result}'
-	)
+ //     telegramNotify(
+	//   token: credentials('TELEGRAM_BOT_TOKEN'), // Reference credentials containing Bot Token
+	//   chatId: '93372553', // Replace with your actual Chat ID
+	//   message: 'Your build (#${env.BUILD_NUMBER}) is ${currentBuild.result}'
+	// )
+	post {
+	        success {
+	            script {
+	                bat "curl -X POST -H \"Content-Type: application/json\" -d \"{\\\"chat_id\\\":93372553, \\\"text\\\": \\\"Pipeline succeeded!\\\", \\\"disable_notification\\\": false}\" https://api.telegram.org/bot${telegram_bot}/sendMessage"
+	            }
+	        }
+	        failure {
+	            script {
+	                bat "curl -X POST -H \"Content-Type: application/json\" -d \"{\\\"chat_id\\\":93372553, \\\"text\\\": \\\"Pipeline failed!\\\", \\\"disable_notification\\\": false}\" https://api.telegram.org/bot${telegram_bot}/sendMessage"
+	            }
+	        }
+    	}
 }  
