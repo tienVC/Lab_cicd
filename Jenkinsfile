@@ -43,10 +43,7 @@ pipeline {
              steps {
                  script {
                      docker.withRegistry('',DOCKER_PASS) {
-                         sh 'docker-compose build'
-                     }
-                     docker.withRegistry('',DOCKER_PASS) {
-                        sh 'docker-compose push'
+                         sh 'docker-compose build && docker-compose push'
                      }
                  }
              }
