@@ -50,7 +50,7 @@ pipeline {
 	             steps {
 	                 script {
 	                     docker.withRegistry('',DOCKER_PASS) {
-	                         sh "docker-compose -f docker-compose.yml up -d"
+	                         sh 'docker-compose build'
 	                     }
 	                     docker.withRegistry('',DOCKER_PASS) {
 	                         // docker_image.push("${IMAGE_TAG}")
@@ -64,7 +64,7 @@ pipeline {
  //        stage("Deploy with Docker Compose") {
  //            steps {
  //                script {
- //                    sh "docker-compose -f docker-compose.yml up -d"
+                    // sh "docker-compose -f docker-compose.yml up -d"
  //                }
  //            }
  //        }
