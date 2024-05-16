@@ -51,14 +51,14 @@ pipeline {
 	                sh 'docker-compose build'
 	            }
 	        }
-	        stage('Login to Docker Hub') {
-	            steps {
-	                script {
-	                    // def credentials = credentialsId('DOCKERHUB_CREDENTIALS_ID')
-	                    sh "docker login -u tientrang0311 -p  saker2001"
-	                }
-	            }
-	        }
+	        // stage('Login to Docker Hub') {
+	        //     steps {
+	        //         script {
+	        //             // def credentials = credentialsId('DOCKERHUB_CREDENTIALS_ID')
+	        //             sh "docker login -u tientrang0311 -p  saker2001"
+	        //         }
+	        //     }
+	        // }
 	        stage('Push Images') {
 	            steps {
 	                sh 'docker-compose push'
