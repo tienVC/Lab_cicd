@@ -13,6 +13,7 @@ pipeline {
         IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
         IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
 	JENKINS_API_TOKEN = credentials("JENKINS_API_TOKEN")
+	DOCKERHUB_API_TOKEN = credentials("docker_access_token")
     }
     stages {
         stage('clean workspace') {
@@ -45,19 +46,26 @@ pipeline {
                 sh "npm install"
             }
         }
-	stage("Build & Push Docker Image") {
-	             steps {
-	                 script {
-	                     docker.withRegistry('',DOCKER_PASS) {
-	                         docker_image = docker.build "${IMAGE_NAME}"
-	                     }
-	                     docker.withRegistry('',DOCKER_PASS) {
-	                         docker_image.push("${IMAGE_TAG}")
-	                         docker_image.push('latest')
-	                     }
-	                 }
-	             }
-	         }
+	stages {
+	        stage('Build Images') {
+	            steps {
+	                sh 'docker-compose build'
+	            }
+	        }
+	        stage('Login to Docker Hub') {
+	            steps {
+	                script {
+	                    def credentials = credentialsId('DOCKERHUB_CREDENTIALS_ID')
+	                    sh "docker login -u tientrang0311 -p  ${DOCKERHUB_API_TOKEN}"
+	                }
+	            }
+	        }
+	        stage('Push Images') {
+	            steps {
+	                sh 'docker-compose push'
+	            }
+	        }
+	    }
 
 	 stage ('Cleanup Artifacts') {
              steps {
