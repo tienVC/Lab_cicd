@@ -28,8 +28,7 @@ pipeline {
          stage("Sonarqube Analysis") {
             steps {
                 withSonarQubeEnv('SonaQube-Sever') {
-                     sh '''/opt/sonar-scanner/bin/sonar-scanner -Dsonar.projectName=lab_cicd \
-                    -Dsonar.projectKey=lab_cicd '''
+                     sh '/opt/sonar-scanner/bin/sonar-scanner -Dsonar.projectKey=lab_cicd   -Dsonar.sources=.   -Dsonar.host.url=http://54.215.81.76:9000   -Dsonar.login=sqp_c9d5aa06e36b6816005c9dc5368c9b5c8de25f29 '
                 }
             }
 
