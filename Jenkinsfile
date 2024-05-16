@@ -50,30 +50,15 @@ pipeline {
 	             steps {
 	                 script {
 	                     docker.withRegistry('',DOCKER_PASS) {
-	                         sh 'docker-compose build'
+	                         docker_image = docker.build "${IMAGE_NAME}"
 	                     }
 	                     docker.withRegistry('',DOCKER_PASS) {
-	                         // docker_image.push("${IMAGE_TAG}")
-	                         // docker_image.push('latest')
-				      sh 'docker-compose push'
+	                         docker_image.push("${IMAGE_TAG}")
+	                         docker_image.push('latest')
 	                     }
 	                 }
 	             }
 	         }
-
- //        stage("Deploy with Docker Compose") {
- //            steps {
- //                script {
-                    // sh "docker-compose -f docker-compose.yml up -d"
- //                }
- //            }
- //        }
-	// stage('Push Image to Docker Hub') {         
- //    	    steps{                            
-	// 	 sh 'docker push ${DOCKER_USER}/${APP_NAME}:$BUILD_NUMBER'           
-	// 	echo 'Push Image Completed'       
-	//     }            
-	// }
 
 	 stage ('Cleanup Artifacts') {
              steps {
