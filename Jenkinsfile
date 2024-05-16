@@ -42,7 +42,7 @@ pipeline {
 	    stage("Build & Push Docker Image") {
              steps {
                  script {
-                     docker.withRegistry('',DOCKER_PASS) {
+                     docker.withRegistry('https://hub.docker.com/repositories/tientrang0311',DOCKER_PASS) {
                          sh 'docker-compose build && docker-compose push'
                      }
                  }
