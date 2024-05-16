@@ -8,6 +8,7 @@ services:
     build:
       dockerfile: Dockerfile.dev
       context: "./server"
+    image: tientrang0311/multi-server
     volumes:
       - /app/node_modules
       - ./server:/app
@@ -24,6 +25,7 @@ services:
     build:
       dockerfile: Dockerfile.dev
       context: ./client
+    image: tientrang0311/multi-client
     volumes:
       - /app/node_modules
       - ./client:/app
