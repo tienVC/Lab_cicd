@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent agent1
     tools {
         jdk "jdk17"
         nodejs "node16"
