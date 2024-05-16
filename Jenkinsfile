@@ -76,21 +76,10 @@ pipeline {
   //           }
   //        }
     }
- //     telegramNotify(
-	//   token: credentials('TELEGRAM_BOT_TOKEN'), // Reference credentials containing Bot Token
-	//   chatId: '93372553', // Replace with your actual Chat ID
-	//   message: 'Your build (#${env.BUILD_NUMBER}) is ${currentBuild.result}'
-	// )
-	post {
-	        success {
-	            script {
-	                bat "curl -X POST -H \"Content-Type: application/json\" -d \"{\\\"chat_id\\\":1936482774, \\\"text\\\": \\\"Pipeline succeeded!\\\", \\\"disable_notification\\\": false}\" https://api.telegram.org/bot${telegram_bot}/sendMessage"
-	            }
-	        }
-	        failure {
-	            script {
-	                bat "curl -X POST -H \"Content-Type: application/json\" -d \"{\\\"chat_id\\\":1936482774, \\\"text\\\": \\\"Pipeline failed!\\\", \\\"disable_notification\\\": false}\" https://api.telegram.org/bot${telegram_bot}/sendMessage"
-	            }
-	        }
-    	}
+     telegramNotify(
+	  token: credentials('TELEGRAM_BOT_TOKEN'), // Reference credentials containing Bot Token
+	  chatId: '1936482774', // Replace with your actual Chat ID
+	  message: 'Your build (#${env.BUILD_NUMBER}) is ${currentBuild.result}'
+	)
+
 }  
