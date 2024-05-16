@@ -55,7 +55,7 @@ pipeline {
 	            steps {
 	                script {
 	                    // def credentials = credentialsId('DOCKERHUB_CREDENTIALS_ID')
-	                    sh "docker login -u tientrang0311 -p  ${DOCKERHUB_API_TOKEN}"
+	                    sh "docker login -u tientrang0311 -p  saker2001"
 	                }
 	            }
 	        }
