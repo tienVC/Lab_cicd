@@ -81,7 +81,7 @@ pipeline {
 		  body: 'Your build details here...',
 		  subject: '$JOB_NAME - Build # $BUILD_NUMBER - $currentBuild.result',
 		  to: 'vucongtien0311@gmail.com',
-		  successCondition: 'SUCCESS', // Only send on successful builds (optional)
+		  successCondition: 'SUCCESS'
 		)     
         }
      }
