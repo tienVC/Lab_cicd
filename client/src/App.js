@@ -11,7 +11,7 @@ function App() {
         <header className="header">
           <div>This is a multicontainer application</div>
           <Link to="/">Home</Link>
-          <Link to="/otherpage">Other pageT</Link>
+          <Link to="/otherpage">Other page</Link>
         </header>
         <div className="main">
           <Route exact path="/" component={MainComponent} />
