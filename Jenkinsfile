@@ -49,16 +49,6 @@ pipeline {
                  }
              }
          }
-	        // stage('Build Images') {
-	        //     steps {
-	        //         sh 'docker-compose build'
-	        //     }
-	        // }
-	        // stage('Push Images') {
-	        //     steps {
-	        //         sh 'docker-compose push'
-	        //     }
-	        // }
 	 stage ('Cleanup Artifacts') {
              steps {
                  script {
@@ -68,13 +58,13 @@ pipeline {
                  }
              }
          }
-	 // stage("Trigger CD Pipeline") {
-  //           steps {
-  //               script {
-  //                   sh "curl -v -k --user clouduser:${JENKINS_API_TOKEN} -X POST -H 'cache-control: no-cache' -H 'content-type: application/x-www-form-urlencoded' --data 'IMAGE_TAG=${IMAGE_TAG}' 'http://3.132.221.232:8080//job/Lab_cicd/buildWithParameters?token=gitops-token'"
-  //               }
-  //           }
-  //        }
+	 stage("Trigger CD Pipeline") {
+            steps {
+                script {
+                    sh "curl -v -k --user clouduser:${JENKINS_API_TOKEN} -X POST -H 'cache-control: no-cache' -H 'content-type: application/x-www-form-urlencoded' --data 'IMAGE_TAG=${IMAGE_TAG}' 'http://3.132.221.232:8080//job/Lab_cicd/buildWithParameters?token=gitops-token'"
+                }
+            }
+         }
     }
 	post {
 	        success {
