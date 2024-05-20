@@ -44,7 +44,7 @@ pipeline {
              steps {
                  script {
                      docker.withRegistry('',DOCKER_PASS) {
-                         sh 'docker-compose build && docker-compose push'
+                         sh 'docker-compose build --build-arg IMAGE_TAG=${IMAGE_TAG} && docker-compose push'
                      }
                  }
              }
