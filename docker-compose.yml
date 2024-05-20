@@ -1,23 +1,23 @@
 version: "3"
 services:
-  postgres:
-    image: "postgres:latest"
-    environment:
-      - POSTGRES_PASSWORD=postgres_password
-  api:
-    build:
-      dockerfile: Dockerfile.dev
-      context: "./server"
-    image: tientrang0311/multi-server
-    volumes:
-      - /app/node_modules
-      - ./server:/app
-    environment:
-      - PGUSER=postgres
-      - PGHOST=postgres
-      - PGDATABASE=postgres
-      - PGPASSWORD=postgres_password
-      - PGPORT=5432
+  # postgres:
+  #   image: "postgres:latest"
+  #   environment:
+  #     - POSTGRES_PASSWORD=postgres_password
+  # api:
+  #   build:
+  #     dockerfile: Dockerfile.dev
+  #     context: "./server"
+  #   image: tientrang0311/multi-server
+  #   volumes:
+  #     - /app/node_modules
+  #     - ./server:/app
+  #   environment:
+  #     - PGUSER=postgres
+  #     - PGHOST=postgres
+  #     - PGDATABASE=postgres
+  #     - PGPASSWORD=postgres_password
+  #     - PGPORT=5432
   client:
     stdin_open: true
     environment:
@@ -26,6 +26,6 @@ services:
       dockerfile: Dockerfile.dev
       context: ./client
     image: tientrang0311/multi-client
-    volumes:
-      - /app/node_modules
-      - ./client:/app
+    # volumes:
+    #   - /app/node_modules
+    #   - ./client:/app
