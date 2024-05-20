@@ -6,7 +6,7 @@ pipeline {
     }
     environment {
         SCANNER_HOME = tool 'sonar-scanner'
-        APP_NAME = "lab_cicd"
+        APP_NAME = "multi-client"
         RELEASE = "1.0.0"
         DOCKER_USER = "tientrang0311"
         DOCKER_PASS = "dockerhub"
@@ -58,13 +58,39 @@ pipeline {
                  }
              }
          }
-	 stage("Trigger CD Pipeline") {
+	    stage("Cleanup Workspace") {
+             steps {
+                cleanWs()
+             }
+         }
+         stage("Checkout from SCM") {
+             steps {
+                     git branch: 'main', credentialsId: 'github', url: 'https://github.com/tienVC/gitops'
+             }
+         }
+         stage("Update the Deployment Tags") {
             steps {
-                script {
-                    sh "curl -v -k --user tienvc:${JENKINS_API_TOKEN} -X POST -H 'cache-control: no-cache' -H 'content-type: application/x-www-form-urlencoded' --data 'IMAGE_TAG=${IMAGE_TAG}' 'http://54.215.81.76:8080/job/lab_cd/buildWithParameters?token=gitops-token'"
+                sh """
+                    cat client-deployment.yml
+                    sed -i 's/${APP_NAME}.*/${APP_NAME}:${IMAGE_TAG}/g' client-deployment.yml
+                    cat client-deployment.yml
+                """
+            }
+         }
+         stage("Push the changed deployment file to GitHub") {
+            steps {
+                sh """
+                    git config --global user.name "tienvc"
+                    git config --global user.email "vucongtien0311@gmail.com"
+                    git add client-deployment.yml
+                    git commit -m "Updated Deployment Manifest"
+                """
+                withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')]) {
+                    sh "git push https://github.com/tienVC/gitops main"
                 }
             }
          }
+
     }
 	post {
 	        success {
